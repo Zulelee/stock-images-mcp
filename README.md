@@ -1,6 +1,6 @@
 # Stock Images MCP Server
 
-A Model Context Protocol (MCP) server for searching and downloading stock images from multiple platforms. Built for personal use with Cursor and shared with the community.
+A Model Context Protocol (MCP) server for searching and downloading stock images from Pexels and Pixabay. Built for personal use with Cursor and shared with the community.
 
 ## Prerequisites
 
@@ -41,7 +41,6 @@ Add this configuration to your `~/.cursor/mcp.json` file:
       "command": "uvx",
       "args": ["git+https://github.com/Zulelee/stock-images-mcp"],
       "env": {
-        "UNSPLASH_API_KEY": "your_unsplash_api_key_here",
         "PEXELS_API_KEY": "your_pexels_api_key_here",
         "PIXABAY_API_KEY": "your_pixabay_api_key_here"
       }
@@ -50,14 +49,7 @@ Add this configuration to your `~/.cursor/mcp.json` file:
 }
 ```
 
-### Step 2: Get API Keys (Atleast one of the API keys is required)
-
-**Unsplash:**
-
-1. Go to https://unsplash.com/developers
-2. Make sure you are logged in
-3. Create an app
-4. Get your API key from the app dashboard
+### Step 2: Get API Keys (At least one of the API keys is required)
 
 **Pexels:**
 
@@ -82,8 +74,8 @@ Once the tool connects, you can use the stock images tools directly in your conv
 
 - Search for images: "Find tech workspace images"
 - Download images: "Download 5 nature photos"
-- Search specific platforms: "Search Unsplash for coding setup images"
+- Search specific platforms: "Search Pexels for coding setup images"
 
 ## Available Tools
 
-- **`search_stock_images`**: Search across Pexels, Unsplash, and Pixabay
+- **`search_stock_images`**: Search across Pexels and Pixabay

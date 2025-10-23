@@ -25,7 +25,6 @@ mcp = FastMCP("stock-images-mcp")
 
 # API Keys from environment variables
 PEXELS_API_KEY = os.getenv("PEXELS_API_KEY")
-UNSPLASH_API_KEY = os.getenv("UNSPLASH_API_KEY")
 PIXABAY_API_KEY = os.getenv("PIXABAY_API_KEY")
 
 # Create downloads directory
@@ -69,34 +68,6 @@ def search_pexels(query: str, per_page: int = 10) -> List[Dict[str, Any]]:
     except requests.RequestException as e:
         raise StockImageError(f"Pexels API error: {str(e)}")
 
-def search_unsplash(query: str, per_page: int = 10) -> List[Dict[str, Any]]:
-    """Search images on Unsplash"""
-    validate_api_key("Unsplash", UNSPLASH_API_KEY)
-    
-    headers = {"Authorization": f"Client-ID {UNSPLASH_API_KEY}"}
-    url = f"https://api.unsplash.com/search/photos?query={quote(query)}&per_page={per_page}"
-    
-    try:
-        response = requests.get(url, headers=headers)
-        response.raise_for_status()
-        data = response.json()
-        
-        images = []
-        for photo in data.get("results", []):
-            images.append({
-                "id": photo["id"],
-                "url": photo["urls"]["full"],
-                "preview_url": photo["urls"]["regular"],
-                "photographer": photo["user"]["name"],
-                "alt": photo.get("alt_description", ""),
-                "width": photo["width"],
-                "height": photo["height"],
-                "platform": "unsplash"
-            })
-        return images
-    except requests.RequestException as e:
-        raise StockImageError(f"Unsplash API error: {str(e)}")
-
 def search_pixabay(query: str, per_page: int = 10) -> List[Dict[str, Any]]:
     """Search images on Pixabay"""
     validate_api_key("Pixabay", PIXABAY_API_KEY)
@@ -127,24 +98,21 @@ def search_pixabay(query: str, per_page: int = 10) -> List[Dict[str, Any]]:
 @mcp.tool()
 async def search_stock_images(query: str, platform: str = "all", per_page: int = 10) -> str:
     """
-    Search for stock images across multiple platforms (Pexels, Unsplash, Pixabay)
-    
+    Search for stock images across multiple platforms (Pexels, Pixabay)
+
     Args:
         query: Search query for images
-        platform: Platform to search on (all, pexels, unsplash, pixabay). Default: all
+        platform: Platform to search on (all, pexels, pixabay). Default: all
         per_page: Number of images to return per platform (1-50). Default: 10
     """
     print(f"MCP Tool (Stock Images): search_stock_images called with query: {query}, platform: {platform}", file=sys.stderr)
     
     try:
         results = {}
-        
+
         if platform in ["all", "pexels"] and PEXELS_API_KEY:
             results["pexels"] = search_pexels(query, per_page)
-        
-        if platform in ["all", "unsplash"] and UNSPLASH_API_KEY:
-            results["unsplash"] = search_unsplash(query, per_page)
-        
+
         if platform in ["all", "pixabay"] and PIXABAY_API_KEY:
             results["pixabay"] = search_pixabay(query, per_page)
         
