@@ -1,0 +1,16 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "stock-images-mcp": {
+      "type": "stdio",
+      "command": "uv",
+      "args": ["run", "server.py"],
+      "cwd": "./",
+      "env": {
+        "UNSPLASH_API_KEY": "${UNSPLASH_API_KEY}",
+        "PEXELS_API_KEY": "${PEXELS_API_KEY}",
+        "PIXABAY_API_KEY": "${PIXABAY_API_KEY}"
+      }
+    }
+  }
+}

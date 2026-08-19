@@ -1,0 +1,59 @@
+{
+  "manifest_version": "0.4",
+  "name": "stock-images-mcp",
+  "display_name": "Stock Images MCP",
+  "version": "1.0.0",
+  "description": "Search and download stock images from Pexels, Unsplash, and Pixabay via MCP.",
+  "author": {
+    "name": "Zulelee"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Zulelee/stock-images-mcp"
+  },
+  "homepage": "https://github.com/Zulelee/stock-images-mcp",
+  "server": {
+    "type": "uv",
+    "entry_point": "server.py",
+    "mcp_config": {
+      "command": "uv",
+      "args": ["run", "--directory", "${__dirname}", "server.py"],
+      "env": {
+        "UNSPLASH_API_KEY": "${user_config.unsplash_api_key}",
+        "PEXELS_API_KEY": "${user_config.pexels_api_key}",
+        "PIXABAY_API_KEY": "${user_config.pixabay_api_key}"
+      }
+    }
+  },
+  "user_config": {
+    "unsplash_api_key": {
+      "type": "string",
+      "title": "Unsplash API Key",
+      "description": "Get your key from https://unsplash.com/developers",
+      "sensitive": true,
+      "required": false
+    },
+    "pexels_api_key": {
+      "type": "string",
+      "title": "Pexels API Key",
+      "description": "Get your key from https://www.pexels.com/api/",
+      "sensitive": true,
+      "required": false
+    },
+    "pixabay_api_key": {
+      "type": "string",
+      "title": "Pixabay API Key",
+      "description": "Get your key from https://pixabay.com/api/docs/",
+      "sensitive": true,
+      "required": false
+    }
+  },
+  "compatibility": {
+    "platforms": ["darwin", "linux", "win32"],
+    "runtimes": {
+      "python": ">=3.12"
+    }
+  },
+  "keywords": ["mcp", "stock-images", "pexels", "unsplash", "pixabay"],
+  "license": "MIT"
+}

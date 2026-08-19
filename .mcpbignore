@@ -1,0 +1,12 @@
+.git/
+.github/
+.env
+.env.example
+downloads/
+__pycache__/
+*.pyc
+.venv/
+venv/
+.DS_Store
+README.md
+*.mcpb
